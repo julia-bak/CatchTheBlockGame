@@ -1,6 +1,6 @@
 const start = document.querySelector("#start")
 const game = document.querySelector("#game")
-const times = document.querySelector("#time")
+const timeEl = document.querySelector("#time")
 const result = document.querySelector("#result")
 const timeHeader = document.querySelector("#time-header")
 const resultHeader = document.querySelector("#result-header")
@@ -26,17 +26,17 @@ function startGame() {
   setGameTime()
   gameTime.setAttribute("disabled", "true")
   isGameStarted = true
-  game.style.backgroundColor = "#fff"
+  game.style.backgroundColor = "#ffedf3"
   hide(start)
 
-  const interval = setInterval(function () {
-    const time = parseFloat(times.textContent)
+  let interval = setInterval(function () {
+    let time = parseFloat(timeEl.textContent)
 
     if (time <= 0) {
       clearInterval(interval)
       endGame()
     } else {
-      times.textContent = (time - 0.1).toFixed(1)
+      timeEl.textContent = (time - 0.1).toFixed(1)
     }
   }, 100)
 
@@ -49,7 +49,7 @@ function setGameScore() {
 
 function setGameTime() {
   let time = +gameTime.value
-  times.textContent = time.toFixed(1)
+  timeEl.textContent = time.toFixed(1)
   show(timeHeader)
   hide(resultHeader)
 }
@@ -86,12 +86,11 @@ function renderBox() {
 
   box.style.height = box.style.width = boxSize + "px"
   box.style.position = "absolute"
-
-  // box.style.backgroundColor = getRandomColor()
-
+  box.style.backgroundColor = "#" + randomColor()
   box.style.top = getRandom(0, maxTop) + "px"
   box.style.left = getRandom(0, maxLeft) + "px"
   box.style.cursor = "pointer"
+  box.style.border = "1px solid #2d416f"
   box.setAttribute("data-box", "true")
 
   game.insertAdjacentElement("afterbegin", box)
@@ -100,6 +99,7 @@ function renderBox() {
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min) + min)
 }
-// function getRandomColor() {
-//   return Math.floor(Math.random() * 16777215).toString(16)
-// }
+function randomColor() {
+  return Math.floor(Math.random() * 16777215).toString(16)
+}
+
